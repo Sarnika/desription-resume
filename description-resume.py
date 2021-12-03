@@ -3,7 +3,10 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import streamlit as st
 import pdfplumber
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud, STOPWORDS
 
+st.set_option('deprecation.showPyplotGlobalUse', False)
 st.header("Job Description - Resume Similarity")
 col1,col2 = st.columns(2)
 resume = col1.file_uploader("Upload Resume", type=["pdf", "docx", "txt"])
@@ -53,3 +56,14 @@ if st.button("Run"):
     matchPercentage = cosine_similarity(count_matrix)[0][1] * 100
     matchPercentage = round(matchPercentage, 2) # round to two decimal
     st.header("Resume matches about "+ str(matchPercentage)+ "% of the job description.")
+
+    st.header("Word Cloud representation of the job description.")
+    wordcloud = WordCloud(stopwords=STOPWORDS,
+                          background_color='white',
+                          width=1200,
+                          height=1000
+                          ).generate(job_description)
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis("off")
+    fig = plt.show()
+    st.pyplot(fig)
