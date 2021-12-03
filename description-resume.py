@@ -6,6 +6,9 @@ import pdfplumber
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS
 
+padding = 0
+st.set_page_config(layout="wide")
+
 st.set_option('deprecation.showPyplotGlobalUse', False)
 st.header("Job Description - Resume Similarity")
 col1,col2 = st.columns(2)
