@@ -11,9 +11,11 @@ st.set_page_config(layout="wide")
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 st.header("Job Description - Resume Similarity")
-col1,col2 = st.columns(2)
-resume = col1.file_uploader("Upload Resume", type=["pdf", "docx", "txt"])
-job_description = col2.file_uploader("Upload Job Description", type=["pdf", "docx", "txt"])
+
+resume = st.file_uploader("Upload Resume", type=["pdf", "docx", "txt"])
+job_description = st.text_area("Upload Job Description")
+# job_description = col2.file_uploader("Upload Job Description", type=["pdf", "docx", "txt"])
+
 
 if st.button("Run"):
 
@@ -35,21 +37,21 @@ if st.button("Run"):
         resume = docx2txt.process(resume)
 
 
-    if job_description is not None:
-        if job_description.type == "text/plain":
-            # Read as string (decode bytes to string)
-            job_description = str(job_description.read(), "utf-8")
-
-        elif job_description.type == "application/pdf":
-            try:
-                with pdfplumber.open(job_description) as pdf:
-                    pages = pdf.pages[0]
-                    job_description = pages.extract_text()
-            except:
-                st.write("None")
-
-    else:
-        job_description = docx2txt.process(job_description)
+    # if job_description is not None:
+    #     if job_description.type == "text/plain":
+    #         # Read as string (decode bytes to string)
+    #         job_description = str(job_description.read(), "utf-8")
+    #
+    #     elif job_description.type == "application/pdf":
+    #         try:
+    #             with pdfplumber.open(job_description) as pdf:
+    #                 pages = pdf.pages[0]
+    #                 job_description = pages.extract_text()
+    #         except:
+    #             st.write("None")
+    #
+    # else:
+    #     job_description = docx2txt.process(job_description)
 
 
 
